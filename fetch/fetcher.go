@@ -24,7 +24,8 @@ func Fetch(url string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36")
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3100.0 Safari/537.36")
+	req.Header.Set("Cookie","Hm_lpvt_2c8ad67df9e787ad29dbd54ee608f5d2=1558348617; Hm_lvt_2c8ad67df9e787ad29dbd54ee608f5d2=1558348585; FSSBBIl1UgzbN7N80T=3y_FEXfOIhumpbxk3uwKo3EXg1Af4T_gw9NVrR6CPL9Yfq3uZZweLWxgztxlcu6hj14lOUBIU2zh1iS9DGWHX_ahpP4R2swtH2b2LLVGfkeylRkD55oxaEVDfwSb1cpHZA03uPMF24GxSGDCXBxcfZkyN_o5.zkDtrkbnXKEPZ_v3YsI7rHAL.NbMDC02p5MnrOlE50MJvTckQthl.BIPLk0JRyNl0oE.GEZhzncUHFwSIRtyQx2CraVDFO7tDyLFjrouiDEb4ff12kLz5cudWjxsoUA0EVJTdCMPlO.urIEP3Ms5hP5F4Hi_Fsxr865uJzV; sid=3af15b39-d841-4d1b-8e43-89ac14e72760; FSSBBIl1UgzbN7N80S=9jVXOwn6ThqTV.1sm6xh3ra3ghbWNlzISMhKF4XFGGZzEPrzLurTqcHWFLbWe63H")
 
 	response, err := client.Do(req)
 
@@ -35,7 +36,7 @@ func Fetch(url string) ([]byte, error) {
 	defer response.Body.Close()
 
 	if response.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("wrong code with the request,code status %d,message: %s", response.StatusCode,response.Status)
+		return nil, fmt.Errorf("wrong code with the request,code status %d,message: %s", response.StatusCode, response.Status)
 	}
 
 	bodyReader := bufio.NewReader(response.Body)
