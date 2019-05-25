@@ -44,7 +44,7 @@ func Worker(firstRequest Request) (ParseResult, error) {
 		return ParseResult{}, err
 	}
 
-	ParseResult := firstRequest.ParserFunc(body,firstRequest.Url)
+	ParseResult := firstRequest.Parser.Parse(body, firstRequest.Url)
 
 	return ParseResult, nil
 }

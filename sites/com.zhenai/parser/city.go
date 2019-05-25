@@ -20,9 +20,10 @@ func ParseCity(contents []byte, url string) engine.ParseResult {
 	for _, aTag := range matches {
 		name := aTag[2]
 		//result.Items = append(result.Items, "User "+string(name))
-		result.Requests = append(result.Requests, engine.Request{Url: string(aTag[1]), ParserFunc: func(bytes []byte, url string) engine.ParseResult {
-			return ParseProfile(bytes, url, string(name))
-		}})
+		result.Requests = append(result.Requests, engine.Request{
+			Url:    string(aTag[1]),
+			Parser: NewProfileParser(string(name)),
+		})
 	}
 
 	//matches = cityUrlRex.FindAllSubmatch(contents, -1)
@@ -38,8 +39,8 @@ func ParseCity(contents []byte, url string) engine.ParseResult {
 
 	for _, m := range matches {
 		result.Requests = append(result.Requests, engine.Request{
-			Url:        string(m[1]),
-			ParserFunc: ParseCity,
+			Url:    string(m[1]),
+			Parser: engine.NewFuncParser(ParseCity, "ParseCity"),
 		})
 	}
 

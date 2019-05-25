@@ -14,6 +14,7 @@ var nickNameRex = regexp.MustCompile(`"nickname":"([^"]+)"`)
 var registeredRex = regexp.MustCompile(`"objectWorkCityString":"([^"]+)"`)
 var educationRex = regexp.MustCompile(`"educationString":"([^"]+)"`)
 var incomeRex = regexp.MustCompile(`"月收入:([^"]+)"`)
+
 //var imageRex = regexp.MustCompile(`"photoURL":"([^"]+)"`)
 var imageRex2 = regexp.MustCompile(`<div class="logo f-fl" style="background-image:url\(([^?]+\.jpg)\?[^)]+\);`)
 var idUrlRex = regexp.MustCompile(`http://album.zhenai.com/u/([\d]+)`)
@@ -77,4 +78,22 @@ func trimQuotes(s string) string {
 		}
 	}
 	return s
+}
+
+type ProfileParser struct {
+	userName string
+}
+
+func (p *ProfileParser) Parse(contents []byte, url string) engine.ParseResult {
+	return ParseProfile(contents, url, p.userName)
+}
+
+func (p *ProfileParser) Serialize() (name string, args interface{}) {
+	return "ParseProfile", p.userName
+}
+
+func NewProfileParser(name string) *ProfileParser {
+	return &ProfileParser{
+		userName: name,
+	}
 }

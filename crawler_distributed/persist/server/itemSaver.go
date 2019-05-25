@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	err := serverRpc(fmt.Sprintf(":%s", config.ElasticSearchPort), config.ElasticSearchIndex)
+	err := serverRpc(fmt.Sprintf(":%s", config.ItemSaverPort), config.ElasticSearchIndex)
 
 	if err != nil {
 		panic(err)

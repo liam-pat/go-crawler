@@ -14,16 +14,17 @@ func main() {
 	}
 
 	e := engine.ConcurrentEngine{
-		Scheduler: &scheduler.QueuedScheduler{},
-		WorkCount: 10,
-		ItemChan:  itemChan,
+		Scheduler:        &scheduler.QueuedScheduler{},
+		WorkCount:        10,
+		ItemChan:         itemChan,
+		RequestProcessor: engine.Worker,
 	}
-	//e.Run(engine.Request{
-	//	Url:        "http://www.zhenai.com/zhenghun",
-	//	ParserFunc: parser.ParseCityList,
-	//})
 	e.Run(engine.Request{
-		Url:        "http://www.zhenai.com/zhenghun/shanghai",
-		ParserFunc: parser.ParseCity,
+		Url:    "http://www.zhenai.com/zhenghun",
+		Parser: engine.NewFuncParser(parser.ParseCityList, "ParseCityList"),
 	})
+	//e.Run(engine.Request{
+	//	Url:    "http://www.zhenai.com/zhenghun/shanghai",
+	//	Parser: engine.NewFuncParser(parser.ParseCityList, "ParseCityList"),
+	//})
 }
