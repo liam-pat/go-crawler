@@ -12,4 +12,6 @@ const (
 	NilParser     = "NilParser"
 
 	CrawlerServiceRpc = "CrawlerService.Process"
+
+	Qps = 20
 )
