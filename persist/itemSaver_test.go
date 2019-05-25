@@ -13,7 +13,7 @@ func TestSave(t *testing.T) {
 	expected := engine.Item{
 		Url:  "test.com",
 		Type: "true_love",
-		Id:   "121212",
+		Id:   "22222",
 		PayLoad: model.Profile{
 			Name:       "test",
 			Gender:     "男",
@@ -34,7 +34,7 @@ func TestSave(t *testing.T) {
 		panic(err)
 	}
 
-	err = save(client, index, expected)
+	_, err = Save(client, index, expected)
 
 	if err != nil {
 		panic(err)

@@ -6,7 +6,6 @@ import (
 	"go-crawler/model"
 	"regexp"
 	"strings"
-	"time"
 )
 
 var basicInfoRex = regexp.MustCompile(`"basicInfo":\[([^]]+)],`)
@@ -20,7 +19,6 @@ var imageRex2 = regexp.MustCompile(`<div class="logo f-fl" style="background-ima
 var idUrlRex = regexp.MustCompile(`http://album.zhenai.com/u/([\d]+)`)
 
 func ParseProfile(contents []byte, url string, name string) engine.ParseResult {
-	time.Sleep(time.Second * 10)
 	profile := model.Profile{}
 
 	profile, err := decodeBasicInfo(extractString(contents, basicInfoRex), profile)
@@ -32,6 +30,7 @@ func ParseProfile(contents []byte, url string, name string) engine.ParseResult {
 
 	profile.Gender = extractString(contents, genderRex)
 	profile.Name = extractString(contents, nickNameRex)
+	profile.Name = name
 	profile.Registered = extractString(contents, registeredRex)
 	profile.Education = extractString(contents, educationRex)
 	profile.Income = extractString(contents, incomeRex)

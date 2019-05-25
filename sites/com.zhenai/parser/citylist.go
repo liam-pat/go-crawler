@@ -7,7 +7,7 @@ import (
 
 const regexString = `<a href="(http://www.zhenai.com/zhenghun/[0-9a-zA-Z]+)"[^>]*>([^<]+)</a>`;
 
-func ParseCityList(content []byte) engine.ParseResult {
+func ParseCityList(content []byte, url string) engine.ParseResult {
 
 	re := regexp.MustCompile(regexString)
 
