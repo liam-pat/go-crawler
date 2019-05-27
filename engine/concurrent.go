@@ -22,9 +22,7 @@ type ReadyNotifier interface {
 
 func (engine *ConcurrentEngine) Run(seeds ...Request) {
 
-	//in := make(chan Request)
 	out := make(chan ParseResult)
-	//engine.Scheduler.ConfigureMasterWorkerChan(in)
 	engine.Scheduler.Run()
 
 	for i := 0; i < engine.WorkCount; i++ {
@@ -53,6 +51,7 @@ func (engine *ConcurrentEngine) Run(seeds ...Request) {
 func (engine *ConcurrentEngine) createWork(in chan Request, out chan ParseResult, ready ReadyNotifier) {
 	go func() {
 		for {
+			// add chan Request to the worker chan
 			ready.WorkReady(in)
 			request := <-in
 			result, err := engine.RequestProcessor(request)

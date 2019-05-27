@@ -10,7 +10,6 @@ import "gopkg.in/olivere/elastic.v7"
 
 func ItemSaver(index string) (chan engine.Item, error) {
 	client, err := elastic.NewClient(elastic.SetSniff(false))
-
 	if err != nil {
 		return nil, err
 	}
@@ -23,7 +22,7 @@ func ItemSaver(index string) (chan engine.Item, error) {
 			log.Printf("item saver : got Item #%d: %v", itemCount, item)
 			itemCount++
 
-			_,err := Save(client, index, item)
+			_, err := Save(client, index, item)
 
 			if err != nil {
 				log.Printf("item saver error: item %s ;error: %s", item, err)

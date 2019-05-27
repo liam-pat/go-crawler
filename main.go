@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"go-crawler/config"
 	"go-crawler/engine"
 	"go-crawler/persist"
 	"go-crawler/scheduler"
@@ -8,22 +10,26 @@ import (
 )
 
 func main() {
-	itemChan, err := persist.ItemSaver("dating_profile")
+	// new a  goroutine to waiting the itemChan to input item to save
+	itemChan, err := persist.ItemSaver(fmt.Sprintf("%s", basic_config.ElasticsearchIndex))
+
 	if err != nil {
 		panic(err)
 	}
 
-	e := engine.ConcurrentEngine{
+	concurrentEngine := engine.ConcurrentEngine{
 		Scheduler:        &scheduler.QueuedScheduler{},
 		WorkCount:        10,
 		ItemChan:         itemChan,
 		RequestProcessor: engine.Worker,
 	}
-	e.Run(engine.Request{
-		Url:    "http://www.zhenai.com/zhenghun",
-		Parser: engine.NewFuncParser(parser.ParseCityList, "ParseCityList"),
-	})
-	//e.Run(engine.Request{
+	concurrentEngine.Run(
+		engine.Request{
+			Url:    "http://www.zhenai.com/zhenghun",
+			Parser: engine.NewFuncParser(parser.ParseCityList, "ParseCityList"),
+		})
+
+	//concurrentEngine.Run(engine.Request{
 	//	Url:    "http://www.zhenai.com/zhenghun/shanghai",
 	//	Parser: engine.NewFuncParser(parser.ParseCityList, "ParseCityList"),
 	//})
